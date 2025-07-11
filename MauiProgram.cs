@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
+using SmartCSLBlog.Interfaces;
+using SmartCSLBlog.Services;
 
 namespace SmartCSLBlog
 {
@@ -15,9 +17,12 @@ namespace SmartCSLBlog
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
+            builder.Services.AddSingleton<IPostsService, PostsService>();
+
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif
+
 
             return builder.Build();
         }
