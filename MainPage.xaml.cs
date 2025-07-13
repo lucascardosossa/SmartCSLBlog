@@ -1,4 +1,7 @@
-﻿namespace SmartCSLBlog
+﻿using SmartCSLBlog.Services;
+using SmartCSLBlog.Views;
+
+namespace SmartCSLBlog
 {
     public partial class MainPage : ContentPage
     {
@@ -11,14 +14,12 @@
 
         private void OnCounterClicked(object? sender, EventArgs e)
         {
-            count++;
+            IrPraPosts();
+        }
 
-            if (count == 1)
-                CounterBtn.Text = $"Clicked {count} time";
-            else
-                CounterBtn.Text = $"Clicked {count} times";
-
-            SemanticScreenReader.Announce(CounterBtn.Text);
+        private async Task IrPraPosts()
+        {
+            await NavigationService.NavigationGoTo<PostsView>();
         }
     }
 }

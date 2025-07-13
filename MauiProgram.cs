@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using SmartCSLBlog.Behaviors;
 using SmartCSLBlog.Interfaces;
 using SmartCSLBlog.Services;
 using SmartCSLBlog.ViewModels;
@@ -19,12 +20,9 @@ namespace SmartCSLBlog
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-            builder.Services.AddSingleton<IPostsService, PostsService>();
-            builder.Services.AddSingleton<ICommentsService, CommentsService>();
-            builder.Services.AddTransient<PostsView>();
-            builder.Services.AddTransient<PostsViewModel>();
-            builder.Services.AddTransient<CommentsViewModel>();
-            builder.Services.AddTransient<CommentsView>();
+            ModelLocator.RegisterSingleton(typeof(IPostsService), typeof(PostsService));
+            ModelLocator.RegisterSingleton(typeof(ICommentsService), typeof(CommentsService));
+            
 
 #if DEBUG
             builder.Logging.AddDebug();

@@ -1,17 +1,19 @@
-﻿using System;
+﻿using SQLite;
 using System.Text.Json.Serialization;
 
 namespace SmartCSLBlog.Models
 {
     public class Posts
     {
-        [JsonPropertyName("userId")]
-        public int UserId { get; set; }
-
+        
+        [PrimaryKey]
         [JsonPropertyName("id")]
         public int Id { get; set; }
 
+        [JsonPropertyName("userId")]
+        public int UserId { get; set; }
+
         [JsonPropertyName("title")]
-        public required string Title { get; set; }
+        public  string Title { get; set; }
     }
 }

@@ -1,10 +1,6 @@
 ﻿using SmartCSLBlog.Interfaces;
 using SmartCSLBlog.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using SmartCSLBlog.Repository;
 
 namespace SmartCSLBlog.Services
 {
@@ -17,9 +13,39 @@ namespace SmartCSLBlog.Services
         }
 
         public async Task<List<Comments>> GetCommentsAsync(int postId)
+        { 
+        
+            List<Comments> commentsPost = new List<Comments>();
+            if (ConexaoService.TemConexaoInternet())
+            {
+                var comments = await Service().GetCommentsAsync();
+                commentsPost = comments.Where(c => c.PostId == postId).ToList();
+                SaveCommentsDB(commentsPost);
+            }
+            else
+            {
+                var repository = new CommentsRepository();
+                commentsPost = repository.GetCommentsByPostId(postId);
+            }
+
+            return commentsPost;
+
+        }
+
+        public void SaveCommentsDB(List<Comments> comments)
         {
-            var comments = await Service().GetCommentsAsync();
-            return comments.Where(c => c.PostId == postId).ToList();
+            foreach (var comment in comments)
+            {
+                try
+                {
+                    var repository = new CommentsRepository();
+                    repository.AddComment(comment);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Erro ao salvar comentário localmente: " + ex.Message);
+                }
+            }
         }
     }
 }

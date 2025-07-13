@@ -9,8 +9,7 @@ namespace SmartCSLBlog.Repository
 
         public Context()
         {
-            var sqliteHandle = new SQLiteHandle();
-            database = sqliteHandle.DoesLocalDbExists ? new SQLiteConnection(sqliteHandle._databasePath) : GetSQLiteDBConnection();
+            database = GetSQLiteDBConnection();
 
             database.CreateTable<Posts>();
             database.CreateTable<Comments>();

@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using SmartCSLBlog.Interfaces;
 using SmartCSLBlog.Models;
+using SmartCSLBlog.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -26,9 +27,16 @@ namespace SmartCSLBlog.ViewModels
 
         public override async void CurrentPageOnAppearing(object sender, EventArgs e)
         {
-            // Use the generated property 'Post' instead of directly referencing the field 'post'
             var _comments = await _commentsService.GetCommentsAsync(Posts?.Id ?? 1);
             Comments = new ObservableCollection<Comments>(_comments);
+            if (!ConexaoService.TemConexaoInternet() && !Comments.Any())
+            {
+                await Application.Current.MainPage.DisplayAlert(
+                    "Nenhum comentário encontrado",
+                    "Você não está conectado à internet e não há comentários salvos localmente.",
+                    "OK"
+                );
+            }
         }
     }
 }

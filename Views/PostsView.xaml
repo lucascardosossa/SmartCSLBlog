@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<views:BaseContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"  
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"  
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"  
              x:Class="SmartCSLBlog.Views.PostsView" 
+             xmlns:openBehavior="clr-namespace:SmartCSLBlog.Behaviors"
+             openBehavior:ModelLocator.AutoViewModel="True"
              xmlns:views="clr-namespace:SmartCSLBlog.Views"
              xmlns:vm="clr-namespace:SmartCSLBlog.ViewModels"
-             x:TypeArguments="vm:PostsViewModel"
-             x:DataType="vm:PostsViewModel">  
-    <VerticalStackLayout>  
-        <Label Text="Lista de Posts" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,20,0,10" />
-        <CollectionView x:Name="Lista" 
-                        ItemsSource="{Binding Posts}" SelectionMode="Single" 
-                        SelectionChangedCommand="{Binding ItemSelecionadoCommand}"
+             Title="Lista de Posts">  
+    <ScrollView>
+        <VerticalStackLayout>
+            <CollectionView Margin="5" x:Name="Lista" 
+                        ItemsSource="{Binding Itens}" SelectionMode="Single" VerticalOptions="FillAndExpand"
+                        SelectionChangedCommand="{Binding ItemSelecionadoCommand}" 
                     SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference Lista}}">
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout
@@ -22,24 +23,26 @@
 
                     <Border
                                 Padding="0"
-                                Background="White"
+                                Background="LightGrey"
                                 StrokeShape="RoundRectangle 10"
                                 StrokeThickness="0.2">
                         <Grid
-                                ColumnDefinitions="20,*"
+                                ColumnDefinitions="20,Auto"
                                 ColumnSpacing="5" HeightRequest="60">
                             <Border
                                 Grid.Column="0"
-                                        Background="Blue"
+                                        Background="DarkGray"
                                         StrokeThickness="0">
                             </Border>
                             <VerticalStackLayout Grid.Row="0" Grid.Column="1">
+                                <Label Text="{Binding Id}" TextColor="Black" FontSize="18" FontAttributes="Bold" />
                                 <Label Text="{Binding Title}" TextColor="Black" FontSize="18" FontAttributes="Bold" />
                             </VerticalStackLayout>
                         </Grid>
                     </Border>
                 </DataTemplate>  
             </CollectionView.ItemTemplate>  
-        </CollectionView>  
-    </VerticalStackLayout>  
-</views:BaseContentPage>
+        </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>  
+</ContentPage>

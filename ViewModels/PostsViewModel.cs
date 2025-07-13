@@ -17,7 +17,7 @@ namespace SmartCSLBlog.ViewModels
     {
         private readonly IPostsService _service;
 
-        [ObservableProperty] private ObservableCollection<Posts> posts;
+        [ObservableProperty] private ObservableCollection<Posts> itens;
 
         public PostsViewModel(IPostsService service)
         {
@@ -27,7 +27,8 @@ namespace SmartCSLBlog.ViewModels
         public override async void CurrentPageOnAppearing(object sender, EventArgs e)
         {
             var _posts = await _service.GetPostsAsync();
-            Posts = new ObservableCollection<Posts>(_posts);
+
+            Itens = [.._posts];
         }
 
         [RelayCommand]

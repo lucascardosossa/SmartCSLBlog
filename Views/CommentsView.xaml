@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<views:BaseContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SmartCSLBlog.Views.CommentsView"
-             xmlns:views="clr-namespace:SmartCSLBlog.Views"
-             xmlns:vm="clr-namespace:SmartCSLBlog.ViewModels"
-             x:TypeArguments="vm:CommentsViewModel"
-             x:DataType="vm:CommentsViewModel"
-             Title="CommentsView">
+             xmlns:openBehavior="clr-namespace:SmartCSLBlog.Behaviors"
+             openBehavior:ModelLocator.AutoViewModel="True"
+             Title="Comentários">
     <VerticalStackLayout>
-        <Label Text="Lista de Posts" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,20,0,10" />
         <CollectionView x:Name="Lista" 
                 ItemsSource="{Binding Comments}" SelectionMode="Single" 
                 SelectionChangedCommand="{Binding ItemSelecionadoCommand}"
@@ -28,13 +25,9 @@
                         StrokeThickness="0.2">
                         <Grid
                         ColumnDefinitions="20,*"
-                        ColumnSpacing="5" HeightRequest="60">
-                            <Border
-                        Grid.Column="0"
-                                Background="Blue"
-                                StrokeThickness="0">
-                            </Border>
+                        ColumnSpacing="5" HeightRequest="100">
                             <VerticalStackLayout Grid.Row="0" Grid.Column="1">
+                                <Label Text="{Binding Id}" TextColor="Black" FontSize="18" FontAttributes="Bold" />
                                 <Label Text="{Binding Body}" TextColor="Black" FontSize="18" FontAttributes="Bold" />
                             </VerticalStackLayout>
                         </Grid>
@@ -43,4 +36,4 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
     </VerticalStackLayout>
-</views:BaseContentPage>
+</ContentPage>
