@@ -12,7 +12,7 @@ namespace SmartCSLBlog.Services
         public async Task<List<Posts>> GetPostsAsync()
         {
             List<Posts> posts;
-            if (ConexaoService.TemConexaoInternet())
+            if (NetworkService.HasInternetConnection())
             {
                 posts = await Service().GetPostsAsync();
                 SavePostsDB(posts);

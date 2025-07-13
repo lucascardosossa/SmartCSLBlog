@@ -16,7 +16,7 @@ namespace SmartCSLBlog.Services
         { 
         
             List<Comments> commentsPost = new List<Comments>();
-            if (ConexaoService.TemConexaoInternet())
+            if (NetworkService.HasInternetConnection())
             {
                 var comments = await Service().GetCommentsAsync();
                 commentsPost = comments.Where(c => c.PostId == postId).ToList();

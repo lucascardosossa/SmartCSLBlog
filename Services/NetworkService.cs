@@ -1,23 +1,20 @@
-﻿
-namespace SmartCSLBlog.Services
+﻿namespace SmartCSLBlog.Services
 {
-    
-
-    public class ConexaoService
+    public class NetworkService
     {
-        public static bool TemConexaoInternet()
+        public static bool HasInternetConnection()
         {
             var current = Connectivity.NetworkAccess;
             return current == NetworkAccess.Internet;
         }
 
-        public static bool TemConexaoLimitada()
+        public static bool HasConstrainedConnection()
         {
             var current = Connectivity.NetworkAccess;
             return current == NetworkAccess.ConstrainedInternet;
         }
 
-        public static bool TemAlgumaConexao()
+        public static bool HasAnyConnection()
         {
             var current = Connectivity.NetworkAccess;
             return current == NetworkAccess.Internet ||
@@ -25,3 +22,4 @@ namespace SmartCSLBlog.Services
         }
     }
 }
+    

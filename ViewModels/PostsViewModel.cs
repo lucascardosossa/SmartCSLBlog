@@ -4,31 +4,32 @@ using SmartCSLBlog.Interfaces;
 using SmartCSLBlog.Models;
 using SmartCSLBlog.Services;
 using SmartCSLBlog.Views;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SmartCSLBlog.ViewModels
 {
     public partial class PostsViewModel : BaseViewModel
     {
         private readonly IPostsService _service;
+        private readonly IDialogService _dialogService;
+        private readonly IConnectivityService _connectivityService;
 
         [ObservableProperty] private ObservableCollection<Posts> itens;
+        [ObservableProperty] private int count;
 
-        public PostsViewModel(IPostsService service)
+        public PostsViewModel(
+            IPostsService service,
+            IDialogService dialogService,
+            IConnectivityService connectivityService)
         {
             _service = service;
+            _dialogService = dialogService;
+            _connectivityService = connectivityService;
         }
 
         public override async void CurrentPageOnAppearing(object sender, EventArgs e)
         {
-            var _posts = await _service.GetPostsAsync();
-
-            Itens = [.._posts];
+            await LoadPostsAsync();
         }
 
         [RelayCommand]
@@ -41,8 +42,34 @@ namespace SmartCSLBlog.ViewModels
             }
             catch (Exception ex)
             {
-                _ = Shell.Current.DisplayAlert("Erro", "Ocorreu um erro ao selecionar o item.", "ok");
+                await _dialogService.ShowErrorAsync("Erro", "Ocorreu um erro ao selecionar o item.", "ok");
             }
+        }
+
+        [RelayCommand]
+        private async Task RefreshAsync()
+        {
+            if (!_connectivityService.HasInternetConnection())
+            {
+                await _dialogService.ShowWarningAsync("Atenção", "Você não está conectado à internet.", "ok");
+                return;
+            }
+
+            try
+            {
+                await LoadPostsAsync();
+            }
+            catch (Exception)
+            {
+                await _dialogService.ShowErrorAsync("Erro", "Ocorreu um erro ao atualizar os dados.", "ok");
+            }
+        }
+
+        private async Task LoadPostsAsync()
+        {
+            var posts = await _service.GetPostsAsync();
+            Itens = [.. posts];
+            Count = Itens.Count;
         }
     }
 }
