@@ -1,9 +1,13 @@
+using SmartCSLBlog.ViewModels;
+
 namespace SmartCSLBlog.Views;
 
-public partial class PostsView : ContentPage
+[XamlCompilation(XamlCompilationOptions.Compile)]
+public partial class PostsView : BaseContentPage<PostsViewModel>
 {
-	public PostsView()
-	{
-		InitializeComponent();
-	}
+    public PostsView(PostsViewModel viewModel) : base(viewModel)
+    {
+        InitializeComponent();
+    }
 }
+

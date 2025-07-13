@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:BaseContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SmartCSLBlog.Views.CommentsView"
+             xmlns:views="clr-namespace:SmartCSLBlog.Views"
+             xmlns:vm="clr-namespace:SmartCSLBlog.ViewModels"
+             x:TypeArguments="vm:CommentsViewModel"
+             x:DataType="vm:CommentsViewModel"
+             Title="CommentsView">
+    <VerticalStackLayout>
+        <Label Text="Lista de Posts" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,20,0,10" />
+        <CollectionView x:Name="Lista" 
+                ItemsSource="{Binding Comments}" SelectionMode="Single" 
+                SelectionChangedCommand="{Binding ItemSelecionadoCommand}"
+            SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference Lista}}">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout
+                    ItemSpacing="5"
+                    Orientation="Vertical" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+
+                    <Border
+                        Padding="0"
+                        Background="White"
+                        StrokeShape="RoundRectangle 10"
+                        StrokeThickness="0.2">
+                        <Grid
+                        ColumnDefinitions="20,*"
+                        ColumnSpacing="5" HeightRequest="60">
+                            <Border
+                        Grid.Column="0"
+                                Background="Blue"
+                                StrokeThickness="0">
+                            </Border>
+                            <VerticalStackLayout Grid.Row="0" Grid.Column="1">
+                                <Label Text="{Binding Body}" TextColor="Black" FontSize="18" FontAttributes="Bold" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </VerticalStackLayout>
+</views:BaseContentPage>

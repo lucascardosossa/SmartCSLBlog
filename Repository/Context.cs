@@ -3,7 +3,7 @@ using SmartCSLBlog.Models;
 
 namespace SmartCSLBlog.Repository
 {
-    internal class Context
+    public class Context
     {
         public SQLiteConnection database;
 

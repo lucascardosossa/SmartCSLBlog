@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SmartCSLBlog.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,6 @@ namespace SmartCSLBlog.Interfaces
 {
     public interface IPostsService
     {
+        Task<List<Posts>> GetPostsAsync();
     }
 }

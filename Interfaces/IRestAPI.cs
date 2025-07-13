@@ -12,5 +12,8 @@ namespace SmartCSLBlog.Interfaces
     {
         [Get("/posts")]
         Task<List<Posts>> GetPostsAsync();
+
+        [Get("/comments")]
+        Task<List<Comments>> GetCommentsAsync();
     }
 }

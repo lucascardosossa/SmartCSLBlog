@@ -21,7 +21,7 @@ namespace SmartCSLBlog.Repository
         //static SQLiteAsyncConnection Database;
         //static SQLiteConnection DatabaseSync;
 
-        protected static Context context = ContextSingleton.GetInstance();
+        protected static Context context = context ?? new Context();
 
         /// <summary>
         /// Método que remove todos os registros da Tabela

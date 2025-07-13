@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
 using SmartCSLBlog.Interfaces;
 using SmartCSLBlog.Services;
+using SmartCSLBlog.ViewModels;
+using SmartCSLBlog.Views;
 
 namespace SmartCSLBlog
 {
@@ -18,9 +20,14 @@ namespace SmartCSLBlog
                 });
 
             builder.Services.AddSingleton<IPostsService, PostsService>();
+            builder.Services.AddSingleton<ICommentsService, CommentsService>();
+            builder.Services.AddTransient<PostsView>();
+            builder.Services.AddTransient<PostsViewModel>();
+            builder.Services.AddTransient<CommentsViewModel>();
+            builder.Services.AddTransient<CommentsView>();
 
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
 
